@@ -1,0 +1,261 @@
+:root {
+  --bg: #efebe3;
+  --surface: #fffdf9;
+  --ink: #1b1917;
+  --dim: #6e685f;
+  --accent: #c63d2b;
+  --rule: rgb(27 25 23 / 12%);
+  --shadow: rgb(27 25 23 / 10%);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121110;
+    --surface: #1c1a18;
+    --ink: #f2eee7;
+    --dim: #9b958b;
+    --accent: #e8583f;
+    --rule: rgb(242 238 231 / 12%);
+    --shadow: rgb(0 0 0 / 40%);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5em;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+}
+
+h3 {
+  font-size: 1.125rem;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.wrap {
+  width: min(64rem, 100% - 2 * clamp(1.25rem, 5vw, 3rem));
+  margin-inline: auto;
+}
+
+.prose {
+  max-width: 40rem;
+  padding-block: clamp(2rem, 6vw, 4rem);
+}
+
+.prose h1 {
+  margin-bottom: 0.25em;
+}
+
+.prose h2 {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.dim {
+  color: var(--dim);
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 1.5rem;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.site-header a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.site-header a:hover {
+  color: var(--accent);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.wordmark img {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.5rem;
+}
+
+.site-footer {
+  margin-top: clamp(3rem, 8vw, 6rem);
+  padding-block: 2rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--dim);
+  font-size: 0.9375rem;
+}
+
+.site-footer a {
+  color: inherit;
+}
+
+.hero {
+  display: grid;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  padding-block: clamp(2rem, 6vw, 5rem);
+}
+
+@media (min-width: 48rem) {
+  .hero {
+    grid-template-columns: 1.15fr 1fr;
+  }
+}
+
+.hero .lead {
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  color: var(--dim);
+  max-width: 28em;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-top: 2rem;
+}
+
+.badges img {
+  height: 2.75rem;
+}
+
+.badges img.play {
+  height: 4.125rem;
+  margin: -0.6875rem;
+}
+
+.badges a[aria-disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.badges + .dim {
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+}
+
+.phone {
+  width: min(100%, 20rem);
+  margin-inline: auto;
+  border-radius: 2rem;
+  border: 1px solid var(--rule);
+  box-shadow: 0 1.5rem 3rem -1rem var(--shadow);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.features {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+  padding-block: clamp(2rem, 6vw, 4rem);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 48rem) {
+  .features {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.features .phone {
+  width: min(100%, 15rem);
+  margin: 0 0 1.5rem;
+}
+
+.features p {
+  color: var(--dim);
+}
+
+.promise {
+  text-align: center;
+  padding-block: clamp(2rem, 5vw, 3rem);
+  border-top: 1px solid var(--rule);
+}
+
+.promise p {
+  margin: 0;
+  color: var(--dim);
+}
+
+.faq dt {
+  font-weight: 600;
+  margin-top: 1.5rem;
+}
+
+.faq dd {
+  margin: 0.25rem 0 0;
+  color: var(--dim);
+}
