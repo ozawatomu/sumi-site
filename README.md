@@ -12,4 +12,5 @@ Preview locally with `python3 -m http.server 8080` and open <http://localhost:80
 2. Once they resolve, run
    `gh api -X PUT repos/ozawatomu/sumi-site/pages -f cname=sumicalculator.com -F https_enforced=true`,
    which commits the `CNAME` file for you.
-3. Replace the placeholder store links in `index.html` when the apps are published.
+3. The Google Play badge in `index.html` links to the live listing; swap the App Store badge's
+   `href="#"`/`aria-disabled` placeholder for the real link once the iOS app is approved.
