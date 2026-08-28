@@ -196,6 +196,7 @@ img {
 
 .badges img {
   height: 2.75rem;
+  width: auto;
 }
 
 .badges a[aria-disabled] {
