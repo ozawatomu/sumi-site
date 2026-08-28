@@ -198,11 +198,6 @@ img {
   height: 2.75rem;
 }
 
-.badges img.play {
-  height: 4.125rem;
-  margin: -0.6875rem;
-}
-
 .badges a[aria-disabled] {
   opacity: 0.4;
   pointer-events: none;
