@@ -61,6 +61,8 @@ The previous site was served directly from the root of `main`. **Do not push the
 4. Verify the homepage, download, guides, support and privacy URLs on the live domain. Check a nonexistent URL returns the custom page with an actual 404 response. Confirm images, fonts, HTTPS and store links work.
 5. Verify the QR code opens `https://sumicalculator.com/download/` on a physical Android phone.
 
+Every push to `main` starts the **Validate and deploy Sumi** workflow, including documentation-only changes.
+
 Implementation does not change Pages settings, commit, push or deploy. The source-switch and first push are coordinated release actions. [Astro deployment reference](https://docs.astro.build/en/guides/deploy/github/).
 
 For rollback, redeploy a previous successful Pages artifact. If the first Astro release fails after publication, export the previous static-site commit to a clean temporary directory and deploy those files as a Pages artifact, or restore branch publishing together with the previous static revision. Keep the domain and DNS unchanged. Do not use a destructive Git reset on the working checkout.
