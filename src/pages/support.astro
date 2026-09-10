@@ -1,0 +1,120 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { site } from '../data/site';
+---
+
+<SiteLayout
+  title="Sumi Support — Help With Your Scientific Calculator"
+  description="Find help with Sumi’s exact answers, calculation history, themes and settings, or contact the developer with a question or bug report."
+>
+  <section class="page-heading wrap">
+    <p class="eyebrow">HERE TO HELP</p>
+    <h1>
+      A little
+      <br />
+      <span>clarity.</span>
+    </h1>
+    <p class="page-intro">
+      Questions, bug reports and suggestions are welcome.
+      <br />
+      <a href={`mailto:${site.email}`}>{site.email} ↗</a>
+    </p>
+  </section>
+  <section class="support-content wrap">
+    <div class="support-intro">
+      <h2>
+        Make yourself
+        <br />
+        at home.
+      </h2>
+      <p>
+        New to Sumi? Start with our practical guides to fractions, exact answers
+        and equation solving.
+      </p>
+      <a href="/guides/" class="text-link">
+        Open the notebook <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="faq-list">
+      <details open>
+        <summary>
+          Why does Sumi show a fraction or square root?
+          <span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Sumi keeps supported answers exact. Press <strong>S⇔D</strong> to
+          switch between the exact form and its decimal value.{' '}
+          <a href="/guides/exact-answers/">Learn about exact answers.</a>
+        </p>
+      </details>
+      <details>
+        <summary>
+          How do I see previous calculations?<span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Tap the history key (the clock icon) or drag up from the keypad.
+          Tapping an entry brings its expression back for editing.
+        </p>
+      </details>
+      <details>
+        <summary>
+          How do I change the theme?<span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Open Settings with the sliders icon and choose <strong>Paper</strong>,{' '}
+          <strong>Ink</strong> or <strong>System</strong> under Theme.
+        </p>
+      </details>
+      <details>
+        <summary>
+          How do I change angle units or decimal places?
+          <span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Open Settings and choose <strong>Angle unit</strong> for degrees,
+          radians or gradians. Under <strong>Number format</strong>, choose Fix,
+          Sci, Norm1 or Norm2. Fix lets you set Decimal places; tap S⇔D if you
+          are viewing an exact result.
+        </p>
+      </details>
+      <details>
+        <summary>
+          How do I copy a result?<span aria-hidden="true">+</span>
+        </summary>
+        <p>Long-press the result to copy it to the clipboard.</p>
+      </details>
+      <details>
+        <summary>
+          How do I delete my data?<span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Everything Sumi stores lives on your device.{' '}
+          <strong>Reset all</strong> in Settings clears memory, settings and
+          history. Deleting the app removes its stored data. See the{' '}
+          <a href="/privacy/">privacy policy</a>.
+        </p>
+      </details>
+      <details>
+        <summary>
+          What is the tip jar?<span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Sumi is free with no ads. The tip jar in Settings lets you leave a
+          small one-off tip through the platform’s store. Tips unlock nothing
+          and are never required.
+        </p>
+      </details>
+      <details>
+        <summary>
+          What should I include in a bug report?
+          <span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Email the calculation and the keys you pressed, the result you
+          expected, and your app version and device model. Include a screenshot
+          if it helps show the issue.
+        </p>
+      </details>
+    </div>
+  </section>
+</SiteLayout>

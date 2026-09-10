@@ -1,0 +1,31 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="site-footer wrap">
+  <div class="footer-top">
+    <a class="wordmark" href="/">
+      <span class="brand-mark" aria-hidden="true">
+        墨
+      </span>
+      <span>
+        sumi<span class="wordmark-dot">.</span>
+      </span>
+    </a>
+    <p>A little more space to think.</p>
+  </div>
+  <div class="footer-bottom">
+    <span>© {new Date().getUTCFullYear()} Tomu Ozawa</span>
+    <nav aria-label="Footer navigation">
+      <a href="/guides/">Guides</a>
+      <a href="/support/">Support</a>
+      <a href="/privacy/">Privacy</a>
+      <a href={`mailto:${site.email}`}>
+        Say hello <span aria-hidden="true">↗</span>
+      </a>
+    </nav>
+  </div>
+  <p class="trademark">
+    Google Play and the Google Play logo are trademarks of Google LLC.
+  </p>
+</footer>

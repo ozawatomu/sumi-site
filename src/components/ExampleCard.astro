@@ -1,0 +1,89 @@
+---
+import { examples } from '../data/examples';
+---
+
+<div class="example-card" data-example-card data-theme="paper">
+  <div class="example-heading">
+    <span>Explore examples</span>
+    <div class="theme-controls" role="group" aria-label="Example appearance">
+      <button
+        type="button"
+        data-theme-choice="paper"
+        aria-pressed="true"
+        aria-label="Paper theme"
+      >
+        ◯
+      </button>
+      <button
+        type="button"
+        data-theme-choice="ink"
+        aria-pressed="false"
+        aria-label="Ink theme"
+      >
+        ●
+      </button>
+    </div>
+  </div>
+  <div class="example-tabs" role="group" aria-label="Choose an example">
+    {examples.map((example, index) => (
+      <button
+        type="button"
+        data-example-choice={example.id}
+        aria-pressed={index === 0}
+      >
+        {example.label}
+      </button>
+    ))}
+  </div>
+  <div class="example-display" aria-live="polite" aria-atomic="true">
+    {examples.map((example, index) => (
+      <div data-example-panel={example.id} hidden={index !== 0}>
+        <div class="expression-math">
+          <math
+            aria-label={example.expressionText}
+          ><mrow set:html={example.expression} /></math>
+        </div>
+        <div class="result-line">
+          <span class="math-equals" aria-hidden="true">
+            =
+          </span>
+          <div data-result-exact>
+            <math
+              aria-label={example.exactText}
+            ><mrow set:html={example.exact} /></math>
+          </div>
+          <div data-result-decimal hidden>
+            <span class="decimal-result" aria-hidden="true">
+              {example.decimal}
+            </span>
+            <span class="sr-only">
+              {example.id === 'fractions' ? 'Exactly' : 'Approximately'}{' '}
+              {example.decimal}
+            </span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="example-bottom">
+    <span data-result-caption>Exact answer</span>
+    <button
+      type="button"
+      class="result-toggle"
+      data-result-toggle
+      aria-label="S⇔D: Show decimal result"
+      aria-pressed="false"
+    >
+      S⇔D <span aria-hidden="true">↔</span>
+    </button>
+  </div>
+  <noscript>
+    <p class="example-noscript">
+      One third + one sixth = one half. Enable JavaScript to explore more
+      examples.
+    </p>
+  </noscript>
+</div>
+<script>
+  import '../scripts/examples';
+</script>

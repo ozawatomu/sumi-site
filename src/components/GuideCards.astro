@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+interface Props {
+  exclude?: string;
+}
+const { exclude } = Astro.props;
+const guides = (await getCollection('guides'))
+  .filter((g) => g.id !== exclude)
+  .sort((a, b) => a.data.order - b.data.order);
+const expressions: Record<string, string> = {
+  fractions: '⅓ + ⅙',
+  'exact-answers': '2√2',
+  'solve-equations': 'x² = 2',
+};
+const labels: Record<string, string> = {
+  fractions: 'FRACTIONS',
+  'exact-answers': 'EXACT ANSWERS',
+  'solve-equations': 'EQUATION SOLVING',
+};
+---
+
+<div class="guide-grid">
+  {guides.map((guide) => (
+    <a class="guide-card" href={`/guides/${guide.id}/`}>
+      <div class="guide-art" aria-hidden="true">
+        {expressions[guide.id]}
+      </div>
+      <div class="guide-card-copy">
+        <span class="eyebrow">{labels[guide.id]}</span>
+        <h3>{guide.data.title}</h3>
+        <div class="guide-card-bottom">
+          <span>{guide.data.readTime}</span>
+          <span aria-hidden="true">↗</span>
+        </div>
+      </div>
+    </a>
+  ))}
+</div>

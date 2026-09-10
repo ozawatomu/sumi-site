@@ -1,0 +1,124 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import DownloadButton from '../../components/DownloadButton.astro';
+import GuideCards from '../../components/GuideCards.astro';
+import editing from '../../assets/editing.webp';
+import exact from '../../assets/exact.webp';
+import solve from '../../assets/solve.png';
+import { site } from '../../data/site';
+export async function getStaticPaths() {
+  return (await getCollection('guides')).map((guide) => ({
+    params: { id: guide.id },
+    props: { guide },
+  }));
+}
+interface Props {
+  guide: CollectionEntry<'guides'>;
+}
+const { guide }: Props = Astro.props;
+const { Content } = await render(guide);
+const images = {
+  fractions: editing,
+  'exact-answers': exact,
+  'solve-equations': solve,
+};
+const descriptions = {
+  fractions: 'Stacked fractions in Sumi’s expression display',
+  'exact-answers': 'Sumi showing the exact surd answer for sin(15 degrees)',
+  'solve-equations':
+    'Sumi’s SOLVE result for X² = 2 with X = 1.414213562 and residual zero',
+};
+const id = guide.id as keyof typeof images;
+const url = `${site.origin}/guides/${guide.id}/`;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guide.data.title,
+    description: guide.data.description,
+    datePublished: guide.data.publishedDate.toISOString(),
+    author: { '@type': 'Person', name: 'Tomu Ozawa' },
+    mainEntityOfPage: url,
+    image: new URL(images[id].src, site.origin).href,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Sumi', item: site.origin },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Guides',
+        item: `${site.origin}/guides/`,
+      },
+      { '@type': 'ListItem', position: 3, name: guide.data.title, item: url },
+    ],
+  },
+];
+---
+
+<SiteLayout
+  title={`${guide.data.title} — Sumi Guides`}
+  description={guide.data.description}
+  structuredData={structuredData}
+>
+  <article class="guide-article wrap">
+    <header class="article-heading">
+      <a href="/guides/" class="text-link">
+        <span aria-hidden="true">←</span> The Sumi notebook
+      </a>
+      <h1>{guide.data.title}</h1>
+      <div class="article-meta">
+        <time datetime={guide.data.publishedDate.toISOString().slice(0, 10)}>
+          {guide.data.publishedDate.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            timeZone: 'UTC',
+          })}
+        </time>
+        <span>{guide.data.readTime}</span>
+      </div>
+    </header>
+    <div class="article-layout">
+      <div class="prose">
+        <Content />
+      </div>
+      <aside class="article-aside">
+        <figure>
+          <Image
+            src={images[id]}
+            alt={descriptions[id]}
+            widths={[240, 480]}
+            sizes="240px"
+            width={240}
+            loading="lazy"
+          />
+          <figcaption>Try it in Sumi.</figcaption>
+        </figure>
+        <DownloadButton
+          campaign={`guide_${guide.id.replaceAll('-', '_')}`}
+          compact
+        />
+        <p>
+          Free on Android.
+          <br />
+          iPhone coming soon.
+        </p>
+      </aside>
+    </div>
+  </article>
+  <section class="section related-guides wrap" aria-labelledby="related-title">
+    <p class="eyebrow">KEEP EXPLORING</p>
+    <h2 id="related-title">
+      Another page
+      <br />
+      in the notebook.
+    </h2>
+    <GuideCards exclude={guide.id} />
+  </section>
+</SiteLayout>

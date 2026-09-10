@@ -1,0 +1,27 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import GuideCards from '../../components/GuideCards.astro';
+import FinalDownload from '../../components/FinalDownload.astro';
+---
+
+<SiteLayout
+  title="Sumi Guides — Fractions, Exact Answers & Equation Solving"
+  description="Get comfortable with Sumi. Learn to enter fractions, keep answers exact and use numerical SOLVE with practical, worked examples."
+>
+  <section class="page-heading wrap">
+    <p class="eyebrow">THE SUMI NOTEBOOK</p>
+    <h1>
+      A few good
+      <br />
+      <span>starting points.</span>
+    </h1>
+    <p class="page-intro">
+      A closer look at the little things that make maths feel natural. Follow
+      along, one calculation at a time.
+    </p>
+  </section>
+  <section class="wrap guide-index" aria-label="Calculator guides">
+    <GuideCards />
+  </section>
+  <FinalDownload campaign="guides" />
+</SiteLayout>

@@ -1,0 +1,23 @@
+---
+import DownloadButton from './DownloadButton.astro';
+interface Props {
+  campaign: string;
+}
+const { campaign } = Astro.props;
+---
+
+<section class="final-download wrap" aria-labelledby="download-title">
+  <p class="eyebrow">YOUR NEXT GOOD IDEA STARTS HERE</p>
+  <h2 id="download-title">
+    Make room
+    <br />
+    for the <span>maths.</span>
+  </h2>
+  <p>
+    Powerful enough for the hard problems.
+    <br />
+    Quiet enough to let you think.
+  </p>
+  <DownloadButton campaign={campaign} />
+  <p class="coming-soon">Free. No ads. No account. iPhone coming soon.</p>
+</section>

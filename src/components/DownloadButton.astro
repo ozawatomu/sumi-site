@@ -1,0 +1,42 @@
+---
+import { downloadUrl } from '../data/site';
+interface Props {
+  campaign: string;
+  compact?: boolean;
+  light?: boolean;
+}
+const { campaign, compact = false, light = false } = Astro.props;
+---
+
+<a
+  class:list={['download-button', { compact, 'button-light': light }]}
+  href={downloadUrl(campaign)}
+>
+  <svg
+    width="23"
+    height="25"
+    viewBox="0 0 24 26"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M3 2.7v20.6L15.4 13 3 2.7Z"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linejoin="round"
+    />
+    <path
+      d="m3 2.7 17.5 9.1a1.35 1.35 0 0 1 0 2.4L3 23.3M10.5 6.6l7.1 8.8M10.5 19.4l7.1-8.8"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linejoin="round"
+    />
+  </svg>
+  <span>
+    {compact ? 'Get Sumi for Android' : 'Download for Android'}
+    <small>Free on Google Play</small>
+  </span>
+  <span class="button-arrow" aria-hidden="true">
+    ↗
+  </span>
+</a>

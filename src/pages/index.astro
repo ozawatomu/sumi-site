@@ -1,0 +1,357 @@
+---
+import { Image } from 'astro:assets';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import DownloadButton from '../components/DownloadButton.astro';
+import editing from '../assets/editing.webp';
+import exact from '../assets/exact.webp';
+import history from '../assets/history.webp';
+import dark from '../assets/dark.webp';
+import solve from '../assets/solve.png';
+import ExampleCard from '../components/ExampleCard.astro';
+import FinalDownload from '../components/FinalDownload.astro';
+import GuideCards from '../components/GuideCards.astro';
+import { site } from '../data/site';
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Sumi: Scientific Calculator',
+  operatingSystem: 'Android',
+  applicationCategory: 'UtilitiesApplication',
+  description: site.description,
+  url: site.origin,
+  installUrl: site.android.url,
+  image: `${site.origin}/og.png`,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+  author: { '@type': 'Person', name: 'Tomu Ozawa' },
+};
+---
+
+<SiteLayout
+  title="Sumi — Free Scientific Calculator for Android"
+  structuredData={appSchema}
+>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">
+        <span class="tiny-rule"></span> LESS NOISE. MORE NUMBERS.
+      </p>
+      <h1 id="hero-title">
+        A scientific
+        <br />
+        calculator.
+        <br />
+        <span>Beautifully exact.</span>
+      </h1>
+      <p class="hero-description">
+        Maths the way you write it. Answers the way you need them. A little more
+        room to think.
+      </p>
+      <div id="hero-download" class="hero-download">
+        <DownloadButton campaign="home" />
+        <p class="coming-soon">Made for Android. iPhone coming soon.</p>
+      </div>
+      <a href="#features" class="text-link hero-explore">
+        Meet your new calculator <span aria-hidden="true">↓</span>
+      </a>
+    </div>
+    <div class="hero-stage">
+      <div class="stage-orbit" aria-hidden="true"></div>
+      <span class="stage-label" aria-hidden="true">
+        A CLEARER WAY
+        <br />
+        TO CALCULATE
+      </span>
+      <div class="hero-phone">
+        <Image
+          src={editing}
+          alt="Sumi showing textbook-style fractions and a live exact result of 29/4"
+          widths={[360, 540, 720]}
+          sizes="(max-width: 767px) 240px, 300px"
+          width={300}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="hero-note">
+        <ExampleCard />
+      </div>
+      <span class="stage-caption">Thoughtfully made. Entirely free.</span>
+    </div>
+  </section>
+  <div class="trust-strip wrap">
+    <p>
+      All the maths.
+      <br />
+      <strong>None of the noise.</strong>
+    </p>
+    <span>No ads</span>
+    <span>Works offline</span>
+    <span>No account</span>
+    <span>Always your data</span>
+  </div>
+  <section id="features" class="section wrap natural-section">
+    <div class="natural-copy">
+      <p class="eyebrow">01 — MADE FOR THE WAY YOU THINK</p>
+      <h2>
+        Maths belongs
+        <br />
+        on the page.
+      </h2>
+      <p class="section-lead">
+        Fractions stack. Roots stretch. Powers sit where they should. Work with
+        expressions that look just like your notebook.
+      </p>
+      <div class="feature-detail">
+        <span class="detail-number">01</span>
+        <div>
+          <h3>Write it naturally</h3>
+          <p>
+            Move into any part of an expression and edit it. Your answer updates
+            as you type.
+          </p>
+        </div>
+      </div>
+      <div class="feature-detail">
+        <span class="detail-number">02</span>
+        <div>
+          <h3>Keep it exact</h3>
+          <p>
+            Reduced fractions, surds and multiples of π whenever possible. The
+            decimal is one tap away.
+          </p>
+        </div>
+      </div>
+      <a class="text-link" href="/guides/exact-answers/">
+        A closer look at exact answers <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="exact-stage">
+      <span class="image-kicker">EXACTLY WHAT YOU MEANT.</span>
+      <Image
+        src={exact}
+        alt="Sumi returns sin(15 degrees) as the exact expression (√6 − √2)/4"
+        widths={[300, 600]}
+        sizes="(max-width: 767px) 240px, 280px"
+        width={280}
+        loading="lazy"
+      />
+      <div class="exact-annotation">
+        <span aria-hidden="true">↖</span> A beautiful answer.
+        <br />
+        Without rounding it away.
+      </div>
+    </div>
+  </section>
+  <section class="power-section section wrap" aria-labelledby="power-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">02 — SMALL APP. SERIOUS MATHS.</p>
+        <h2 id="power-title">
+          For the problems
+          <br />
+          worth solving.
+        </h2>
+      </div>
+      <p class="section-lead">
+        From your first fraction to your next physics problem. The tools you
+        need, right where you need them.
+      </p>
+    </div>
+    <div class="power-grid">
+      <article class="power-card calculus-card">
+        <span class="eyebrow">CALCULUS</span>
+        <div class="power-math">
+          <math aria-label="The integral of x squared from zero to three equals nine"><mrow><msubsup><mo>∫</mo><mn>0</mn><mn>3</mn></msubsup><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi><mo>=</mo><mn>9</mn></mrow></math>
+        </div>
+        <h3>A little higher thinking.</h3>
+        <p>
+          Definite integrals, numerical derivatives and sums, laid out in
+          textbook templates.
+        </p>
+      </article>
+      <article class="power-card solver-card">
+        <span class="eyebrow">EQUATION SOLVING</span>
+        <div class="solver-crop">
+          <Image
+            src={solve}
+            alt="Sumi numerically solves X² = 2, showing X = 1.414213562 and residual L−R = 0"
+            width={300}
+            loading="lazy"
+          />
+        </div>
+        <h3>Find your unknown.</h3>
+        <p>
+          Give SOLVE an equation and a starting estimate. Find a numerical value
+          of X and check the residual.
+        </p>
+        <a class="text-link" href="/guides/solve-equations/">
+          Explore SOLVE <span aria-hidden="true">↗</span>
+        </a>
+      </article>
+      <article class="power-card constants-card">
+        <span class="eyebrow">CONSTANTS & CONVERSIONS</span>
+        <div class="constants-art" aria-hidden="true">
+          <span>
+            c <small>299 792 458 m/s</small>
+          </span>
+          <span>
+            π <small>3.1415926535…</small>
+          </span>
+          <span>
+            °F <small>⇄ &nbsp; °C</small>
+          </span>
+        </div>
+        <h3>Less looking things up.</h3>
+        <p>
+          40 scientific constants and 40 unit conversions, plus trigonometry,
+          logarithms and engineering notation.
+        </p>
+      </article>
+    </div>
+  </section>
+  <section class="ink-section" aria-labelledby="ink-title">
+    <div class="wrap ink-inner">
+      <div class="ink-copy">
+        <p class="eyebrow">03 — A QUIETER KIND OF CALCULATOR</p>
+        <h2 id="ink-title">
+          In your element.
+          <br />
+          <span>Day or night.</span>
+        </h2>
+        <p>
+          Warm Paper for a fresh start. Deep Ink for a late-night idea. Two
+          thoughtful themes that can follow your system.
+        </p>
+        <div class="theme-swatches" aria-label="Available themes">
+          <span>
+            <i class="paper-swatch"></i>Paper
+          </span>
+          <span>
+            <i class="ink-swatch"></i>Ink
+          </span>
+        </div>
+        <div class="ink-history">
+          <h3>Your thinking, kept close.</h3>
+          <p>
+            Revisit a calculation in history, tap to edit it and pick up where
+            you left off. Everything stays on your device.
+          </p>
+        </div>
+      </div>
+      <div class="theme-stage">
+        <Image
+          class="history-phone"
+          src={history}
+          alt="Sumi’s history drawer with previous calculations ready to reuse"
+          width={250}
+          loading="lazy"
+        />
+        <Image
+          class="dark-phone"
+          src={dark}
+          alt="Sumi in its dark Ink theme"
+          widths={[300, 600]}
+          sizes="(max-width: 767px) 220px, 260px"
+          width={260}
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+  <section class="section wrap" aria-labelledby="guides-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">A FEW NOTES TO GET YOU STARTED</p>
+        <h2 id="guides-title">
+          Make yourself
+          <br />
+          at home.
+        </h2>
+      </div>
+      <a class="text-link" href="/guides/">
+        All guides <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <GuideCards />
+  </section>
+  <section class="faq-section wrap" aria-labelledby="faq-title">
+    <div>
+      <p class="eyebrow">GOOD QUESTIONS</p>
+      <h2 id="faq-title">
+        A few things
+        <br />
+        to know.
+      </h2>
+      <a href="/support/" class="text-link">
+        More help & support <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="faq-list">
+      <details>
+        <summary>
+          Is Sumi really free?<span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Yes. Every calculator feature is free, with no ads or subscriptions.
+          There’s an optional tip jar in Settings if you’d like to support Sumi.
+          Tips unlock nothing.
+        </p>
+      </details>
+      <details>
+        <summary>
+          Does it work without the internet?<span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Yes. Calculations work completely offline. There’s no account to
+          create, and your history and settings stay on your device.
+        </p>
+      </details>
+      <details>
+        <summary>
+          Can I get Sumi on iPhone?<span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Sumi is available on Android now. The iPhone version is coming soon;
+          this website will link to it when it’s available.
+        </p>
+      </details>
+      <details>
+        <summary>
+          Why do some answers stay as fractions?
+          <span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          Sumi preserves exact answers whenever possible. Tap S⇔D to switch to a
+          decimal.{' '}
+          <a href="/guides/exact-answers/">Learn about exact answers.</a>
+        </p>
+      </details>
+      <details>
+        <summary>
+          Does Sumi collect my data?<span aria-hidden="true">+</span>
+        </summary>
+        <p>
+          The app has no analytics or tracking. Your calculations and settings
+          stay on your device. <a href="/privacy/">Read the privacy policy.</a>
+        </p>
+      </details>
+    </div>
+  </section>
+  <FinalDownload campaign="home" />
+  <div class="mobile-download" data-mobile-download hidden>
+    <DownloadButton campaign="home" compact />
+    <span>Android · Free · No ads</span>
+  </div>
+  <script>
+    const heroDownload = document.querySelector('#hero-download');
+    const bar = document.querySelector<HTMLElement>('[data-mobile-download]');
+    if (heroDownload && bar && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        bar.hidden =
+          entry.isIntersecting || entry.boundingClientRect.bottom > 0;
+      });
+      observer.observe(heroDownload);
+      document.body.classList.add('has-mobile-download');
+    }
+  </script>
+</SiteLayout>
