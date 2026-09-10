@@ -825,9 +825,6 @@ math {
   font-size: 1.5rem;
   margin-bottom: 4px;
 }
-.power-section {
-  padding-top: 0;
-}
 .section-heading {
   display: flex;
   justify-content: space-between;
@@ -839,76 +836,6 @@ math {
   width: 330px;
   font-size: 0.9375rem;
   margin-bottom: 5px;
-}
-.power-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-.power-card {
-  padding: 27px 27px 30px;
-  border: 1px solid var(--rule);
-  border-radius: 5px;
-  overflow: hidden;
-}
-.power-card > .eyebrow {
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-.power-card h3 {
-  font-size: 1.375rem;
-  line-height: 1.25;
-  letter-spacing: -0.04em;
-  margin-bottom: 13px;
-}
-.power-card > p {
-  color: var(--muted);
-  font-size: 0.875rem;
-}
-.power-card > .text-link {
-  margin-top: 17px;
-  font-size: 0.75rem;
-}
-.power-math {
-  height: 189px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.4375rem;
-}
-.solver-crop {
-  height: 189px;
-  overflow: hidden;
-  margin-inline: -8px;
-  position: relative;
-}
-.solver-crop > img {
-  position: absolute;
-  width: 240px;
-  max-width: none;
-  left: 50%;
-  top: -34px;
-  transform: translateX(-50%);
-  mix-blend-mode: multiply;
-}
-.constants-art {
-  height: 189px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 12px;
-}
-.constants-art > span {
-  font-family: 'Noto Sans Math', Inter, sans-serif;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-.constants-art small {
-  font-family: Inter, sans-serif;
-  font-size: 0.8125rem;
-  color: var(--muted);
 }
 .ink-section {
   background: var(--dark);
@@ -1415,12 +1342,6 @@ math {
   .natural-section {
     gap: 50px;
   }
-  .power-card {
-    padding: 24px 20px;
-  }
-  .power-math {
-    font-size: 1.875rem;
-  }
   .ink-inner {
     gap: 35px;
   }
@@ -1511,26 +1432,6 @@ math {
     margin-top: 0;
     width: auto;
     font-size: 1rem;
-  }
-  .power-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .power-card {
-    padding: 25px;
-  }
-  .power-card > p {
-    font-size: 0.9375rem;
-  }
-  .power-math {
-    font-size: 2.6875rem;
-    height: 155px;
-  }
-  .solver-crop {
-    height: 170px;
-  }
-  .constants-art {
-    height: 165px;
   }
   .ink-inner {
     grid-template-columns: 1fr;
@@ -1748,25 +1649,6 @@ math {
   .natural-section {
     gap: 30px;
   }
-  .power-grid {
-    grid-template-columns: 1fr;
-  }
-  .power-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 30px;
-  }
-  .power-card > .eyebrow {
-    grid-column: 1/-1;
-  }
-  .power-math,
-  .solver-crop,
-  .constants-art {
-    grid-row: 2/5;
-  }
-  .power-card h3 {
-    margin-top: 24px;
-  }
   .ink-inner {
     grid-template-columns: 1fr;
   }
@@ -1790,7 +1672,6 @@ math {
   }
 }
 .feature-detail p,
-.power-card > p,
 .ink-history p,
 .faq-list details p {
   font-size: 1rem;
@@ -1827,15 +1708,6 @@ math {
 .result-line > div {
   min-width: 0;
 }
-.constants-art {
-  height: auto;
-  min-height: 189px;
-  padding-block: 30px;
-}
-.constants-art > span {
-  flex-wrap: wrap;
-  row-gap: 4px;
-}
 .site-header {
   height: auto;
   min-height: 116px;
@@ -1860,9 +1732,6 @@ h3 {
     min-height: 86px;
     gap: 15px;
   }
-  .constants-art {
-    min-height: 165px;
-  }
 }
 @media (min-width: 768px) and (max-width: 960px) {
   .hero-note {
@@ -1872,7 +1741,4 @@ h3 {
   .hero-stage {
     height: auto;
   }
-}
-.power-math math {
-  font-size: min(1em, 11vw);
 }

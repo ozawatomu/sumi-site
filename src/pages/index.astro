@@ -6,7 +6,7 @@ import editing from '../assets/editing.webp';
 import exact from '../assets/exact.webp';
 import history from '../assets/history.webp';
 import dark from '../assets/dark.webp';
-import solve from '../assets/solve.png';
+import PowerShowcase from '../components/PowerShowcase.astro';
 import ExampleCard from '../components/ExampleCard.astro';
 import FinalDownload from '../components/FinalDownload.astro';
 import GuideCards from '../components/GuideCards.astro';
@@ -142,73 +142,7 @@ const appSchema = {
       </div>
     </div>
   </section>
-  <section class="power-section section wrap" aria-labelledby="power-title">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">02 — SMALL APP. SERIOUS MATHS.</p>
-        <h2 id="power-title">
-          For the problems
-          <br />
-          worth solving.
-        </h2>
-      </div>
-      <p class="section-lead">
-        From your first fraction to your next physics problem. The tools you
-        need, right where you need them.
-      </p>
-    </div>
-    <div class="power-grid">
-      <article class="power-card calculus-card">
-        <span class="eyebrow">CALCULUS</span>
-        <div class="power-math">
-          <math aria-label="The integral of x squared from zero to three equals nine"><mrow><msubsup><mo>∫</mo><mn>0</mn><mn>3</mn></msubsup><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi><mo>=</mo><mn>9</mn></mrow></math>
-        </div>
-        <h3>A little higher thinking.</h3>
-        <p>
-          Definite integrals, numerical derivatives and sums, laid out in
-          textbook templates.
-        </p>
-      </article>
-      <article class="power-card solver-card">
-        <span class="eyebrow">EQUATION SOLVING</span>
-        <div class="solver-crop">
-          <Image
-            src={solve}
-            alt="Sumi numerically solves X² = 2, showing X = 1.414213562 and residual L−R = 0"
-            width={300}
-            loading="lazy"
-          />
-        </div>
-        <h3>Find your unknown.</h3>
-        <p>
-          Give SOLVE an equation and a starting estimate. Find a numerical value
-          of X and check the residual.
-        </p>
-        <a class="text-link" href="/guides/solve-equations/">
-          Explore SOLVE <span aria-hidden="true">↗</span>
-        </a>
-      </article>
-      <article class="power-card constants-card">
-        <span class="eyebrow">CONSTANTS & CONVERSIONS</span>
-        <div class="constants-art" aria-hidden="true">
-          <span>
-            c <small>299 792 458 m/s</small>
-          </span>
-          <span>
-            π <small>3.1415926535…</small>
-          </span>
-          <span>
-            °F <small>⇄ &nbsp; °C</small>
-          </span>
-        </div>
-        <h3>Less looking things up.</h3>
-        <p>
-          40 scientific constants and 40 unit conversions, plus trigonometry,
-          logarithms and engineering notation.
-        </p>
-      </article>
-    </div>
-  </section>
+  <PowerShowcase />
   <section class="ink-section" aria-labelledby="ink-title">
     <div class="wrap ink-inner">
       <div class="ink-copy">

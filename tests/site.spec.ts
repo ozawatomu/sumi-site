@@ -96,6 +96,31 @@ test('core content and downloads work without JavaScript', async ({
   await expect(
     page.getByRole('math', { name: 'One half', exact: true }),
   ).toBeVisible();
+  const showcase = page.getByRole('region', { name: /For the problems/ });
+  for (const name of [
+    'Find your unknown.',
+    'A little higher thinking.',
+    'Less looking things up.',
+  ]) {
+    await expect(showcase.getByRole('heading', { name })).toBeVisible();
+  }
+  await expect(
+    showcase.getByRole('math', {
+      name: 'The integral of x squared from zero to three equals nine',
+    }),
+  ).toBeVisible();
+  await expect(
+    showcase.getByRole('link', { name: 'See how to solve equations' }),
+  ).toHaveAttribute('href', '/guides/solve-equations/');
+  const storeLink = showcase.getByRole('link', {
+    name: /Download for Android/,
+  });
+  const referrer = new URL(
+    (await storeLink.getAttribute('href'))!,
+  ).searchParams.get('referrer');
+  expect(new URLSearchParams(referrer!).get('utm_campaign')).toBe(
+    'website_home_power',
+  );
   await page.goto('/guides/fractions/');
   await expect(
     page.getByRole('heading', { name: 'Enter and add two fractions' }),
@@ -113,6 +138,22 @@ test('reduced motion and keyboard focus remain usable', async ({ page }) => {
   ).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#main$/);
+  const showcase = page.getByRole('region', { name: /For the problems/ });
+  await showcase.scrollIntoViewIfNeeded();
+  for (const card of await showcase.getByRole('article').all()) {
+    await expect(card).toHaveCSS('animation-name', 'none');
+    await expect(card).toHaveCSS('transform', 'none');
+  }
+  const guide = showcase.getByRole('link', {
+    name: 'See how to solve equations',
+  });
+  await guide.focus();
+  await expect(guide).toBeFocused();
+  await expect(guide).toHaveCSS('outline-style', 'solid');
+  await page.keyboard.press('Tab');
+  await expect(
+    showcase.getByRole('link', { name: /Download for Android/ }),
+  ).toBeFocused();
 });
 
 for (const route of routes) {
@@ -138,7 +179,7 @@ for (const route of routes) {
   });
 }
 
-for (const width of [360, 390, 768, 1440]) {
+for (const width of [360, 390, 768, 1024, 1440]) {
   test(`responsive layout at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 900 });
     for (const route of routes) {
@@ -167,6 +208,12 @@ for (const width of [360, 390, 768, 1440]) {
           path: testInfo.outputPath(`hero-${width}.png`),
           animations: 'disabled',
         });
+        await page
+          .getByRole('region', { name: /For the problems/ })
+          .screenshot({
+            path: testInfo.outputPath(`showcase-${width}.png`),
+            animations: 'disabled',
+          });
       }
     }
   });
@@ -210,4 +257,83 @@ test('enlarged text does not overlap the following section', async ({
   const formula = await page.locator('.power-math math').boundingBox();
   const formulaBox = await page.locator('.power-math').boundingBox();
   expect(formula!.width).toBeLessThanOrEqual(formulaBox!.width);
+  const grid = await page.locator('.power-grid').boundingBox();
+  const download = await page.locator('.power-download').boundingBox();
+  expect(grid!.y + grid!.height).toBeLessThan(download!.y);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+});
+
+test('showcase adapts its hierarchy to desktop, tablet and mobile', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const showcase = page.getByRole('region', { name: /For the problems/ });
+  for (const width of [390, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    const solve = (await showcase
+      .getByRole('article', { name: 'Find your unknown.' })
+      .boundingBox())!;
+    const calculus = (await showcase
+      .getByRole('article', { name: 'A little higher thinking.' })
+      .boundingBox())!;
+    const constants = (await showcase
+      .getByRole('article', { name: 'Less looking things up.' })
+      .boundingBox())!;
+    if (width < 768) {
+      expect(solve.y + solve.height).toBeLessThan(calculus.y);
+      expect(calculus.y + calculus.height).toBeLessThan(constants.y);
+      expect(solve.x).toBeCloseTo(constants.x, 0);
+    } else if (width < 1024) {
+      expect(solve.y + solve.height).toBeLessThan(calculus.y);
+      expect(calculus.y).toBeCloseTo(constants.y, 0);
+      expect(calculus.x + calculus.width).toBeLessThan(constants.x);
+    } else {
+      expect(solve.x + solve.width).toBeLessThan(calculus.x);
+      expect(solve.y).toBeCloseTo(calculus.y, 0);
+      expect(calculus.y + calculus.height).toBeLessThan(constants.y);
+      expect(solve.y + solve.height).toBeCloseTo(
+        constants.y + constants.height,
+        0,
+      );
+    }
+    const screen = (await showcase.locator('.solver-screen').boundingBox())!;
+    const image = (await showcase.getByRole('img').boundingBox())!;
+    expect(image.y).toBeCloseTo(screen.y, 0);
+    expect(image.width).toBeCloseTo(screen.width, 0);
+    expect(screen.height / image.width).toBeCloseTo(648 / 824, 2);
+  }
+});
+
+test('showcase entrance finishes and does not replay when revisited', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const card = page.getByRole('article', { name: 'Find your unknown.' });
+  await card.scrollIntoViewIfNeeded();
+  await expect(card).toHaveClass(/is-revealed/);
+  await expect
+    .poll(() =>
+      card.evaluate((element) =>
+        element
+          .getAnimations()
+          .some((animation) => animation.playState === 'running'),
+      ),
+    )
+    .toBe(false);
+  await expect(card).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await card.scrollIntoViewIfNeeded();
+  expect(
+    await card.evaluate((element) =>
+      element
+        .getAnimations()
+        .some((animation) => animation.playState === 'running'),
+    ),
+  ).toBe(false);
 });
