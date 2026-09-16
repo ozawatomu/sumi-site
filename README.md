@@ -44,12 +44,12 @@ Validated on 10 September 2026 with local Chrome: 19 browser tests passed; type 
 ## Content and product data
 
 - Shared product information, platform availability and store campaign links live in `src/data/site.ts`.
-- Guide Markdown lives in `src/content/guides/` with validated frontmatter. Use English (UK), verified key sequences and accurate numerical limitations. Add guide cards and screenshot mappings when introducing another guide.
+- Guide Markdown lives in `src/content/guides/` with validated frontmatter. Use English (UK), visible keypad labels and verified key sequences. Keep the main example short and secondary help in native `<details>`. New guides need card artwork and a matching `public/img/guides/<slug>.webp` image, also used by Article metadata.
 - The homepage demo uses predetermined, engine-verified fixtures; it does not evaluate arbitrary input. Keep readable default content in generated HTML.
-- App screenshots are authentic captures. Existing images were preserved; the SOLVE capture came from the sibling app's existing gallery tests. The app source was not changed.
+- App screenshots are authentic captures. Guide images render the app's display at 412×200 logical pixels and 3× resolution, using the gallery approach with a temporary Flutter harness. They show `1/3 + 1/6 = 1/2`, `√8 = 2√2`, and `2 × X + 3 = 11` with `X = 4`. Shared homepage images and app source are unchanged.
 - Self-hosted Inter and Noto Sans Math WOFF2 files retain their OFL licences under `public/fonts/`. Inter keeps variable weights with optical size fixed at 14; Noto retains MATH/stretch variants. The existing social image is preserved.
 
-Demo fixtures were checked with Sumi's Dart calculator: `1/3 + 1/6 = 1/2 = 0.5`, `√8 = 2√2 ≈ 2.828427125`, and `sin(15°) = (√6−√2)/4 ≈ 0.2588190451` in degree mode. Fourteen guide sequences were checked, including both roots of `X² = 2` with initial estimates ±1.
+Demo fixtures were checked with Sumi's Dart calculator: `1/3 + 1/6 = 1/2 = 0.5`, `√8 = 2√2 ≈ 2.828427125`, and `sin(15°) = (√6−√2)/4 ≈ 0.2588190451` in degree mode. The simplified guide instructions were checked with actual keypad taps in four temporary Flutter widget tests, covering fraction entry, exact/decimal toggles, mixed numbers, visible SHIFT/ALPHA labels and the linear SOLVE example, including retry and exit.
 
 ## First release: GitHub Pages migration
 

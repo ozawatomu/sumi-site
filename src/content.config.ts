@@ -9,7 +9,6 @@ const guides = defineCollection({
     description: z.string(),
     publishedDate: z.coerce.date(),
     order: z.number(),
-    readTime: z.string(),
   }),
 });
 

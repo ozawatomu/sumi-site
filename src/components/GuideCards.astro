@@ -10,7 +10,7 @@ const guides = (await getCollection('guides'))
 const expressions: Record<string, string> = {
   fractions: '⅓ + ⅙',
   'exact-answers': '2√2',
-  'solve-equations': 'x² = 2',
+  'solve-equations': '2 × X + 3 = 11',
 };
 const labels: Record<string, string> = {
   fractions: 'FRACTIONS',
@@ -22,16 +22,21 @@ const labels: Record<string, string> = {
 <div class="guide-grid">
   {guides.map((guide) => (
     <a class="guide-card" href={`/guides/${guide.id}/`}>
-      <div class="guide-art" aria-hidden="true">
+      <div
+        class:list={[
+          'guide-art',
+          { 'guide-art-equation': guide.id === 'solve-equations' },
+        ]}
+        aria-hidden="true"
+      >
         {expressions[guide.id]}
       </div>
       <div class="guide-card-copy">
         <span class="eyebrow">{labels[guide.id]}</span>
         <h3>{guide.data.title}</h3>
-        <div class="guide-card-bottom">
-          <span>{guide.data.readTime}</span>
-          <span aria-hidden="true">↗</span>
-        </div>
+        <span class="guide-card-arrow" aria-hidden="true">
+          ↗
+        </span>
       </div>
     </a>
   ))}

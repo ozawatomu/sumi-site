@@ -1,48 +1,40 @@
 ---
-title: 'How to calculate fractions in Sumi'
-description: 'Enter stacked fractions, add and simplify them, switch between mixed and improper answers, and convert fractions to decimals in Sumi.'
+title: 'Fractions in Sumi'
+description: 'Sumi simplifies fractions automatically. Try a quick calculation, enter stacked fractions and switch between fraction and decimal answers.'
 publishedDate: 2026-09-10
 order: 1
-readTime: '4 min read'
 ---
 
-Sumi's fraction calculator lets you enter a numerator above a denominator, just as you would write it on paper. It reduces fraction answers automatically and lets you switch between an exact fraction and a decimal without entering the calculation again.
+Sumi simplifies fraction answers automatically. Enter **1 ÷ 3 + 1 ÷ 6**, then tap **=** to get **1/2**. Tap **S⇔D** for **0.5**, and tap it again to switch back.
 
-The examples below use **[fraction]** for the key showing two boxes separated by a fraction bar. **→** means the right arrow on the directional pad. Open Settings using the sliders icon near the top of the keypad; choose **Number format → Norm1** and **Fraction results → d/c** to match the answers shown here.
+## Enter stacked fractions
 
-## Enter and add two fractions
+To write the same calculation with fractions stacked like they are on paper:
 
-Try **1/3 + 1/6**:
+1. Tap **AC** to start fresh.
+2. Tap the fraction key <math class="key-icon" aria-label="fraction key"><mfrac><mo>□</mo><mo>□</mo></mfrac></math>, then **1**, **→**, **3**.
+3. Tap **→** to leave the denominator, then **+**.
+4. Tap <math class="key-icon" aria-label="fraction key"><mfrac><mo>□</mo><mo>□</mo></mfrac></math>, then **1**, **→**, **6**, **=**.
 
-1. Tap **AC** to start a new calculation.
-2. Tap **[fraction]**, then **1**. This fills the numerator.
-3. Tap **→**, then **3** to fill the denominator.
-4. Tap **→** again to move outside the fraction, then tap **+**.
-5. Tap **[fraction]**, **1**, **→**, **6**.
-6. Tap **=**. The answer is **1/2**.
+The answer is **1/2**. Here, **→** means the right arrow on the directional pad. Use it to leave a fraction before adding the next term; otherwise, you’ll keep typing in the denominator.
 
-That second right arrow matters: it puts the addition sign outside the first fraction. If the cursor is still beside the denominator, anything you enter becomes part of that denominator. Watch the fraction bar to check which terms it covers.
+<figure class="guide-example">
+  <img src="/img/guides/fractions.webp" alt="Sumi showing one third plus one sixth as stacked fractions, with the simplified answer one half." width="1236" height="600" loading="lazy" />
+  <figcaption>One third plus one sixth, simplified automatically to one half.</figcaption>
+</figure>
 
-The up and down arrows move between a fraction's numerator and denominator. Use them to correct a number without starting again.
+<details>
+<summary>Enter mixed numbers</summary>
 
-## Turn an existing number into a fraction
+To enter **2 1/3**, tap **AC**, **2**, then **SHIFT**. Tap the mixed-fraction key <math class="key-icon" aria-label="mixed-fraction key"><mrow><mo>□</mo><mfrac><mo>□</mo><mo>□</mo></mfrac></mrow></math> that appears, then **1**, **→**, **3**, **=**. With the default settings, the answer is **7/3**.
 
-You can also type the numerator first. Tap **1**, **[fraction]**, **3**, **=** to calculate **1/3**. The fraction key moves the preceding number into the numerator and places the cursor in the empty denominator.
+</details>
 
-It takes the factor immediately before the cursor. For example, after **2 × 3**, tapping **[fraction]** moves only the **3** above the bar. To put a whole sum in the numerator, enter it in parentheses first: **(1 + 2)**, then **[fraction]**, **4**, **=** gives **3/4**.
+<details>
+<summary>Show mixed-number answers</summary>
 
-Ordinary division also produces fraction answers where supported. **7 ÷ 3 =** gives **7/3**, so the stacked template is a choice about how you enter and read the expression.
+After a fraction result, tap **SHIFT**, then **a b/c** to switch between improper and mixed forms: **7/3** becomes **2 1/3**. Repeat to switch back.
 
-## Use mixed numbers
+For mixed answers by default, choose **Settings → Fraction results → a b/c**.
 
-To enter **2 1/3**, tap **2**, then **SHIFT**, **[fraction]**, **1**, **→**, **3**, **=**. The whole-number part is kept separate from the numerator and denominator. With **d/c** selected in Settings, the answer appears as **7/3**.
-
-After a fraction result, tap **SHIFT**, then **S⇔D** to switch its display between improper and mixed forms. Here, **7/3** becomes **2 1/3**. To make mixed answers your preference for future calculations, choose **Settings → Fraction results → a b/c**.
-
-## Switch between fractions and decimals
-
-Calculate **1 ÷ 3 =**, then tap **S⇔D**. The displayed answer changes from **1/3** to **0.3333333333**. Tap **S⇔D** again to return to **1/3**.
-
-The decimal display is rounded; the fraction states the value exactly. If you want one third, enter **1 ÷ 3** instead of typing a rounded string of threes. Sumi cannot infer the exact value you intended from a rounded input.
-
-Some large fractions exceed the fraction display limit and appear as decimals. This does not mean the expression was entered incorrectly, and **S⇔D** cannot make every result fit an exact fraction form. A zero denominator is different: division by zero produces **Math ERROR**.
+</details>

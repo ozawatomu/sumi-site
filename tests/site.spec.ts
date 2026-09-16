@@ -123,9 +123,85 @@ test('core content and downloads work without JavaScript', async ({
   );
   await page.goto('/guides/fractions/');
   await expect(
-    page.getByRole('heading', { name: 'Enter and add two fractions' }),
+    page.getByRole('heading', { name: 'Enter stacked fractions' }),
   ).toBeVisible();
+  const tip = page.locator('.prose details').first();
+  const tipText = tip.locator('p').first();
+  await expect(tipText).toBeHidden();
+  await tip.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(tipText).toBeVisible();
+  await page.keyboard.press('Space');
+  await expect(tipText).toBeHidden();
   await context.close();
+});
+
+test('guides keep examples and downloads before optional help', async ({
+  page,
+}, testInfo) => {
+  for (const slug of ['fractions', 'exact-answers', 'solve-equations']) {
+    for (const width of [390, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(`/guides/${slug}/`);
+      await page.evaluate(() => document.fonts.ready);
+      const example = page.locator('.guide-example');
+      await example.locator('img').evaluate(async (image: HTMLImageElement) => {
+        image.loading = 'eager';
+        await image.decode();
+      });
+      const tips = page.locator('.prose details');
+      await expect(page.locator('.prose details[open]')).toHaveCount(0);
+      const download = page.locator('.article-download a');
+      const campaign = new URLSearchParams(
+        new URL((await download.getAttribute('href'))!).searchParams.get(
+          'referrer',
+        )!,
+      );
+      expect(campaign.get('utm_campaign')).toBe(
+        `website_guide_${slug.replaceAll('-', '_')}`,
+      );
+      const downloadBox = (await download.boundingBox())!;
+      const exampleBox = (await example.boundingBox())!;
+      const tipsBox = (await tips.first().boundingBox())!;
+      expect(downloadBox.y + downloadBox.height).toBeLessThan(exampleBox.y);
+      expect(exampleBox.y + exampleBox.height).toBeLessThan(tipsBox.y);
+      await page.screenshot({
+        path: testInfo.outputPath(`${slug}-${width}.png`),
+        fullPage: true,
+      });
+      for (const summary of await tips.locator('summary').all()) {
+        await summary.click();
+      }
+      await expect(page.locator('.prose details[open]')).toHaveCount(
+        await tips.count(),
+      );
+      await page.screenshot({
+        path: testInfo.outputPath(`${slug}-${width}-expanded.png`),
+        fullPage: true,
+      });
+      if (width === 390) {
+        await page.evaluate(() => {
+          document.documentElement.style.fontSize = '200%';
+        });
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth,
+          ),
+        ).toBe(true);
+        for (const artwork of await page.locator('.guide-art').all()) {
+          expect(
+            await artwork.evaluate(
+              (element) => element.scrollHeight <= element.clientHeight,
+            ),
+          ).toBe(true);
+        }
+        await page.screenshot({
+          path: testInfo.outputPath(`${slug}-enlarged.png`),
+          fullPage: true,
+        });
+      }
+    }
+  }
 });
 
 test('reduced motion and keyboard focus remain usable', async ({ page }) => {
