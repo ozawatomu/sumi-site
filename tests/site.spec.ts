@@ -47,16 +47,16 @@ test('examples preserve correct exact and decimal results across controls', asyn
   await expect(
     card.locator('[data-example-panel="trigonometry"] .decimal-result'),
   ).toHaveText('0.2588190451');
-  await card.getByRole('button', { name: 'Ink theme' }).click();
-  await expect(card).toHaveAttribute('data-theme', 'ink');
+  await card.getByRole('button', { name: 'Graphite Dark' }).click();
+  await expect(card).toHaveAttribute('data-theme', 'graphite-dark');
   const darkAudit = await new AxeBuilder({ page })
     .include('[data-example-card]')
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
     .analyze();
   expect(darkAudit.violations).toEqual([]);
-  await card.getByRole('button', { name: 'Paper theme' }).focus();
+  await card.getByRole('button', { name: 'Graphite Light' }).focus();
   await page.keyboard.press('Enter');
-  await expect(card).toHaveAttribute('data-theme', 'paper');
+  await expect(card).toHaveAttribute('data-theme', 'graphite-light');
 });
 
 test('mobile download bar follows the hero and leaves footer accessible', async ({
@@ -65,6 +65,7 @@ test('mobile download bar follows the hero and leaves footer accessible', async 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   const bar = page.locator('[data-mobile-download]');
+  await expect(page.locator('#hero-download a')).toBeInViewport({ ratio: 1 });
   await expect(bar).toBeHidden();
   await page.locator('#features').scrollIntoViewIfNeeded();
   await expect(bar).toBeVisible();
@@ -87,7 +88,7 @@ test('core content and downloads work without JavaScript', async ({
   const page = await context.newPage();
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    'Beautifully exact.',
+    /Your scientific calculator\.\s*Always with you\./,
   );
   await expect(page.locator('#hero-download a')).toHaveAttribute(
     'href',
@@ -96,13 +97,9 @@ test('core content and downloads work without JavaScript', async ({
   await expect(
     page.getByRole('math', { name: 'One half', exact: true }),
   ).toBeVisible();
-  const showcase = page.getByRole('region', { name: /For the problems/ });
-  for (const name of [
-    'Find your unknown.',
-    'A little higher thinking.',
-    'Less looking things up.',
-  ]) {
-    await expect(showcase.getByRole('heading', { name })).toBeVisible();
+  const showcase = page.locator('.power-section');
+  for (const id of ['solver-title', 'calculus-title', 'constants-title']) {
+    await expect(showcase.locator(`#${id}`)).toBeVisible();
   }
   await expect(
     showcase.getByRole('math', {
@@ -113,7 +110,7 @@ test('core content and downloads work without JavaScript', async ({
     showcase.getByRole('link', { name: 'See how to solve equations' }),
   ).toHaveAttribute('href', '/guides/solve-equations/');
   const storeLink = showcase.getByRole('link', {
-    name: /Download for Android/,
+    name: /Get Sumi for Android/,
   });
   const referrer = new URL(
     (await storeLink.getAttribute('href'))!,
@@ -133,6 +130,14 @@ test('core content and downloads work without JavaScript', async ({
   await expect(tipText).toBeVisible();
   await page.keyboard.press('Space');
   await expect(tipText).toBeHidden();
+  for (const route of routes) {
+    await page.goto(route);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(page.locator('main')).toBeVisible();
+    for (const link of await page.locator('a[href*="play.google.com"]').all()) {
+      await expect(link).toHaveAttribute('href', /id=com\.tomuozawa\.sumi/);
+    }
+  }
   await context.close();
 });
 
@@ -214,7 +219,7 @@ test('reduced motion and keyboard focus remain usable', async ({ page }) => {
   ).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#main$/);
-  const showcase = page.getByRole('region', { name: /For the problems/ });
+  const showcase = page.locator('.power-section');
   await showcase.scrollIntoViewIfNeeded();
   for (const card of await showcase.getByRole('article').all()) {
     await expect(card).toHaveCSS('animation-name', 'none');
@@ -228,7 +233,7 @@ test('reduced motion and keyboard focus remain usable', async ({ page }) => {
   await expect(guide).toHaveCSS('outline-style', 'solid');
   await page.keyboard.press('Tab');
   await expect(
-    showcase.getByRole('link', { name: /Download for Android/ }),
+    showcase.getByRole('link', { name: /Get Sumi for Android/ }),
   ).toBeFocused();
 });
 
@@ -265,56 +270,87 @@ for (const width of [360, 390, 768, 1024, 1440]) {
         () => document.documentElement.scrollWidth > window.innerWidth,
       );
       expect(overflow, `horizontal overflow on ${route}`).toBe(false);
+      await page.locator('img').evaluateAll(async (images) => {
+        await Promise.all(
+          images.map(async (image) => {
+            const img = image as HTMLImageElement;
+            img.loading = 'eager';
+            await img.decode();
+          }),
+        );
+      });
+      const name = route === '/' ? 'home' : route.replaceAll('/', '-');
+      await page.screenshot({
+        path: testInfo.outputPath(`${name}-${width}.png`),
+        fullPage: true,
+        animations: 'disabled',
+      });
       if (route === '/') {
-        await page.locator('img').evaluateAll(async (images) => {
-          await Promise.all(
-            images.map(async (image) => {
-              const img = image as HTMLImageElement;
-              img.loading = 'eager';
-              await img.decode();
-            }),
-          );
-        });
-        await page.screenshot({
-          path: testInfo.outputPath(`home-${width}.png`),
-          fullPage: true,
-          animations: 'disabled',
-        });
+        const copy = (await page.locator('.hero-copy').boundingBox())!;
+        const phone = (await page.locator('.hero-phone').boundingBox())!;
+        if (width < 768) {
+          expect(copy.y + copy.height).toBeLessThanOrEqual(phone.y);
+        } else {
+          expect(copy.x + copy.width).toBeLessThanOrEqual(phone.x);
+        }
         await page.screenshot({
           path: testInfo.outputPath(`hero-${width}.png`),
           animations: 'disabled',
         });
-        await page
-          .getByRole('region', { name: /For the problems/ })
-          .screenshot({
-            path: testInfo.outputPath(`showcase-${width}.png`),
-            animations: 'disabled',
-          });
+        await page.locator('.power-section').screenshot({
+          path: testInfo.outputPath(`showcase-${width}.png`),
+          animations: 'disabled',
+        });
       }
     }
   });
 }
 
-test('landscape and doubled text remain within the viewport', async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 844, height: 390 });
-  await page.goto('/');
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
-  await page.setViewportSize({ width: 720, height: 900 });
-  await page.evaluate(() => {
-    document.documentElement.style.fontSize = '200%';
+for (const route of routes) {
+  test(`landscape and doubled text remain usable: ${route}`, async ({
+    page,
+  }, testInfo) => {
+    await page.setViewportSize({ width: 844, height: 390 });
+    await page.goto(route);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+      `landscape overflow on ${route}`,
+    ).toBe(true);
+    for (const width of [390, 720]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.evaluate(() => {
+        document.documentElement.style.fontSize = '200%';
+      });
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+        `enlarged text overflow on ${route} at ${width}px`,
+      ).toBe(true);
+      if (route === '/') {
+        await page.evaluate(() =>
+          window.scrollTo(0, document.body.scrollHeight),
+        );
+        const bar = page.locator('[data-mobile-download]');
+        await expect(bar).toBeVisible();
+        const footer = (await page.locator('.trademark').boundingBox())!;
+        const download = (await bar.boundingBox())!;
+        expect(footer.y + footer.height).toBeLessThan(download.y);
+        await page.evaluate(() =>
+          window.scrollTo({ top: 0, behavior: 'instant' }),
+        );
+      }
+      const name = route === '/' ? 'home' : route.replaceAll('/', '-');
+      await page.screenshot({
+        path: testInfo.outputPath(`${name}-${width}-enlarged.png`),
+        fullPage: true,
+        animations: 'disabled',
+      });
+    }
   });
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
-});
+}
 
 test('enlarged text does not overlap the following section', async ({
   page,
@@ -324,9 +360,12 @@ test('enlarged text does not overlap the following section', async ({
   await page.evaluate(() => {
     document.documentElement.style.fontSize = '200%';
   });
-  const card = await page.locator('.hero-note').boundingBox();
+  const hero = await page.locator('.hero').boundingBox();
   const trust = await page.locator('.trust-strip').boundingBox();
-  expect(card!.y + card!.height).toBeLessThan(trust!.y);
+  expect(hero!.y + hero!.height).toBeLessThanOrEqual(trust!.y);
+  const examples = await page.locator('[data-example-card]').boundingBox();
+  const showcase = await page.locator('.power-section').boundingBox();
+  expect(examples!.y + examples!.height).toBeLessThanOrEqual(showcase!.y);
   const constants = await page.locator('.constants-art').boundingBox();
   const title = await page.locator('.constants-card h3').boundingBox();
   expect(constants!.y + constants!.height).toBeLessThanOrEqual(title!.y + 1);
@@ -348,17 +387,13 @@ test('showcase adapts its hierarchy to desktop, tablet and mobile', async ({
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  const showcase = page.getByRole('region', { name: /For the problems/ });
+  const showcase = page.locator('.power-section');
   for (const width of [390, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    const solve = (await showcase
-      .getByRole('article', { name: 'Find your unknown.' })
-      .boundingBox())!;
-    const calculus = (await showcase
-      .getByRole('article', { name: 'A little higher thinking.' })
-      .boundingBox())!;
+    const solve = (await showcase.locator('.solver-card').boundingBox())!;
+    const calculus = (await showcase.locator('.calculus-card').boundingBox())!;
     const constants = (await showcase
-      .getByRole('article', { name: 'Less looking things up.' })
+      .locator('.constants-card')
       .boundingBox())!;
     if (width < 768) {
       expect(solve.y + solve.height).toBeLessThan(calculus.y);
@@ -378,10 +413,17 @@ test('showcase adapts its hierarchy to desktop, tablet and mobile', async ({
       );
     }
     const screen = (await showcase.locator('.solver-screen').boundingBox())!;
-    const image = (await showcase.getByRole('img').boundingBox())!;
+    const imageElement = showcase.locator('.solver-screen img');
+    const image = (await imageElement.boundingBox())!;
+    const ratio = await imageElement.evaluate(
+      (element: HTMLImageElement) =>
+        Number(element.getAttribute('height')) /
+        Number(element.getAttribute('width')),
+    );
     expect(image.y).toBeCloseTo(screen.y, 0);
     expect(image.width).toBeCloseTo(screen.width, 0);
-    expect(screen.height / image.width).toBeCloseTo(648 / 824, 2);
+    expect(image.height / image.width).toBeCloseTo(ratio, 2);
+    expect(screen.height).toBeCloseTo(image.height, 0);
   }
 });
 
@@ -390,7 +432,7 @@ test('showcase entrance finishes and does not replay when revisited', async ({
 }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
-  const card = page.getByRole('article', { name: 'Find your unknown.' });
+  const card = page.locator('.solver-card');
   await card.scrollIntoViewIfNeeded();
   await expect(card).toHaveClass(/is-revealed/);
   await expect

@@ -12,7 +12,8 @@
     "build": "astro build",
     "preview": "astro preview --host 127.0.0.1",
     "test": "playwright test",
-    "test:links": "node scripts/check-build.mjs"
+    "test:links": "node scripts/check-build.mjs",
+    "assets:import": "node scripts/import-app-assets.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -28,6 +29,7 @@
     "lighthouse": "^13.4.1",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^1.0.0",
+    "sharp": "0.35.4",
     "typescript": "^6.0.3"
   }
 }

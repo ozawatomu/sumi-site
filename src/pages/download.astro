@@ -3,12 +3,12 @@ import { Image } from 'astro:assets';
 import QRCode from 'qrcode';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import DownloadButton from '../components/DownloadButton.astro';
-import editing from '../assets/editing.webp';
+import editing from '../assets/app/graphite-editing.png';
 import { site } from '../data/site';
 const qr = await QRCode.toString(`${site.origin}/download/`, {
   type: 'svg',
   margin: 2,
-  color: { dark: '#1B1917', light: '#FFFDF9' },
+  color: { dark: '#202329', light: '#FFFFFF' },
 });
 ---
 
@@ -18,16 +18,14 @@ const qr = await QRCode.toString(`${site.origin}/download/`, {
 >
   <section class="download-page wrap">
     <div>
-      <p class="eyebrow">GOOD MATHS. GREAT COMPANY.</p>
+      <p class="eyebrow">YOUR EVERYDAY CALCULATOR</p>
       <h1>
-        Your next
+        Get Sumi.
         <br />
-        calculator.
-        <br />
-        <span>Right here.</span>
+        <span>Keep it close.</span>
       </h1>
       <p class="page-intro">
-        Textbook-style maths. Exact answers. No ads.
+        Familiar controls. Readable maths. No ads.
         <br />
         Meet Sumi, your free scientific calculator.
       </p>
@@ -50,7 +48,7 @@ const qr = await QRCode.toString(`${site.origin}/download/`, {
         </div>
       </div>
       <p class="download-reassurance">
-        No account. No subscription. Works offline.
+        No account. No subscription. Calculations work offline.
         <br />
         An optional tip jar supports development; all features stay free.
       </p>
@@ -64,7 +62,9 @@ const qr = await QRCode.toString(`${site.origin}/download/`, {
         width={290}
         loading="eager"
       />
-      <span class="download-visual-caption">A little more space to think.</span>
+      <span class="download-visual-caption">
+        Your scientific calculator. Always with you.
+      </span>
     </div>
   </section>
 </SiteLayout>

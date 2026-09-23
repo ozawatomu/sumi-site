@@ -4,7 +4,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
 <SiteLayout
   title="Sumi Privacy Policy — Your Calculations Stay Yours"
-  description="Sumi collects no personal data. Your calculation history and settings stay on your device. Read about local storage, optional tips and the website."
+  description="How Sumi stores calculations and preferences locally, handles optional tips and review prompts, and protects your privacy without ads or analytics."
 >
   <section class="page-heading wrap">
     <p class="eyebrow">YOUR CALCULATIONS STAY YOURS</p>
@@ -14,47 +14,97 @@ import SiteLayout from '../layouts/SiteLayout.astro';
       <span>By design.</span>
     </h1>
     <p class="page-intro">
-      Sumi collects no personal data.
+      No ads. No analytics. No account.
       <br />
-      Your history and settings stay on your device.
+      Sumi does not upload your calculations.
     </p>
   </section>
   <article class="prose legal-prose wrap">
     <h2>Privacy policy</h2>
     <p class="policy-date">
-      App policy effective 27 August 2026. Website information added 10
-      September 2026.
+      First published 27 August 2026. Updated{' '}
+      <time datetime="2026-09-23">23 September 2026</time>.
     </p>
     <p>
-      Sumi is a scientific calculator for Android and iPhone made by Tomu Ozawa.
-      This policy explains what the app does and does not do with your data. The
-      short version: Sumi collects no personal data and makes no network
-      requests of its own.
+      Sumi is an independent scientific calculator made by Tomu Ozawa.
+      Calculations work offline. The app has no account system, advertising,
+      analytics or crash-reporting service, and does not send your calculations
+      or local usage records to the developer.
     </p>
     <h2>Data stored on your device</h2>
     <p>
-      Sumi keeps your calculation history, memory values and settings in the
-      app’s private storage on your device so they are there the next time you
-      open it. This information is never sent anywhere. You can clear it at any
-      time with <em>Reset all</em> in Settings, and it is removed when you
-      delete the app.
+      Sumi saves calculation history, memory values, the expression being
+      edited, calculation settings, and appearance and control preferences in
+      the app’s local storage. It also saves support history and a small amount
+      of information used to space out review requests, described below.
+    </p>
+    <p>
+      Sumi does not operate a server that receives this information. Your
+      operating system may include local app data in device backups or
+      transfers, depending on your device and account settings. Those services
+      are controlled by the platform provider.
+    </p>
+    <h2>Clearing your data</h2>
+    <p>
+      Open{' '}
+      <strong>
+        Settings → Calculation → Memory &amp; reset → Reset calculator
+      </strong>{' '}
+      to clear memory, calculation history and the current expression, and
+      restore default calculation settings. This keeps appearance and control
+      preferences, support history, and review request timing information.
+    </p>
+    <p>
+      To remove all local Sumi data, use your device’s app storage controls or
+      delete the app and its data. Device backups, store purchases and public
+      reviews are managed separately through the relevant platform.
     </p>
     <h2>Tip jar purchases</h2>
     <p>
-      Sumi is free. If you choose to leave a tip, the purchase is processed
-      entirely by Apple (through the App Store) or Google (through Google Play).
-      Sumi receives only a confirmation that the purchase succeeded; it never
-      sees your name, email address or payment details. Apple’s and Google’s
-      handling of purchase data is described in the{' '}
+      Tips are optional one-time purchases and unlock no features. Google Play
+      or the App Store handles payment through its billing service. The app
+      receives purchase status and product and transaction identifiers, and
+      stores a local tip count and transaction record so each purchase is
+      counted once. It does not receive your payment card details, name or email
+      address from the purchase.
+    </p>
+    <p>
+      The store provides the developer with sales and financial reports. Store
+      billing may connect to the internet to load prices, process a tip or
+      finish a pending purchase. Apple’s and Google’s handling of store data is
+      described in the{' '}
       <a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a>{' '}
       and the{' '}
       <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.
     </p>
-    <h2>Third-party services in the app</h2>
+    <h2>Review requests</h2>
     <p>
-      Sumi contains no analytics, advertising or crash-reporting software, and
-      no third-party code other than the platform billing libraries needed for
-      the tip jar.
+      Sumi stores a limited calculation count, a few dates when calculations
+      were completed, when review timing began, and dates of review request
+      attempts or the <strong>Rate Sumi</strong> action. This information stays
+      in local preferences and helps the app avoid asking for a review too early
+      or too often. It is not sent to an analytics service or the developer.
+    </p>
+    <p>
+      Review prompts use the platform’s own review service. The app is not told
+      whether you submitted a review or what rating you chose. If you submit a
+      store review, it is handled and may be published by Google or Apple under
+      their policies. The developer can see public reviews and aggregate store
+      reports.
+    </p>
+    <h2>Links, sharing and support email</h2>
+    <p>
+      Guides, support and privacy links open this website in your browser.{' '}
+      <strong>Rate Sumi</strong> opens the store listing.{' '}
+      <strong>Share Sumi</strong> opens your device’s share sheet with a
+      download link; Sumi does not choose recipients or send a message
+      automatically.
+    </p>
+    <p>
+      If you email the developer, your email address, message and any
+      attachments you choose to send are received so your request can be
+      answered. The in-app feedback action prepares an editable email with the
+      app version and platform. You decide whether to send it.
     </p>
     <h2>This website</h2>
     <p>
@@ -65,9 +115,9 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     <p>
       Google Play links contain campaign labels identifying this website and the
       referring page. These labels contain no personal identifier. Google
-      processes visits and downloads under its own policies. We use Google
-      Search Console and store reports to understand search discovery and
-      download interest.
+      processes visits and downloads under its own policies. Google Search
+      Console and store reports can provide aggregate information about search
+      discovery and download interest.
     </p>
     <p>
       The website is hosted on GitHub Pages. Hosting services process
@@ -79,13 +129,15 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     </p>
     <h2>Children</h2>
     <p>
-      Sumi is suitable for a general audience. Because the app collects no data
-      from anyone, it collects no data from children.
+      Sumi is suitable for a general audience. The app does not ask for age or
+      other personal details, and the developer does not knowingly collect
+      personal information from children. If a child has sent personal
+      information by email, contact the developer to request its deletion.
     </p>
     <h2>Changes to this policy</h2>
     <p>
       If Sumi’s behaviour changes in a way that affects your privacy, this page
-      will be updated and the effective date above revised.
+      will be updated and the revision date above changed.
     </p>
     <h2>Contact</h2>
     <p>

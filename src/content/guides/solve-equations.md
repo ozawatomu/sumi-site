@@ -1,7 +1,8 @@
 ---
-title: 'Solve an equation with Sumi'
-description: 'Find X with Sumi’s SOLVE. Follow a short example using the buttons shown on screen, then get help with starting guesses and other solutions.'
+title: 'How to solve equations with Sumi'
+description: 'Use Sumi’s SOLVE to find X numerically. Follow a worked equation, choose a starting guess and understand the result and its limits.'
 publishedDate: 2026-09-10
+updatedDate: 2026-09-23
 order: 3
 ---
 
@@ -16,7 +17,7 @@ order: 3
 
 The answer is **X = 4**. **L−R** is the difference between the left and right sides; a value close to zero means they agree closely. Here, it’s **0**.
 
-SOLVE finds one numerical solution at a time. Tap **AC** to return to your equation for editing.
+SOLVE finds one numerical solution at a time; it does not give symbolic steps or a list of all roots. Tap **AC** to return to your equation for editing.
 
 <figure class="guide-example">
   <img src="/img/guides/solve-equations.webp" alt="Sumi solving two times X plus three equals eleven, with X equal to four and L minus R equal to zero." width="1236" height="600" loading="lazy" />
@@ -40,3 +41,5 @@ Check your equation includes **X** and was entered as intended, then try another
 For trigonometric equations, check **Settings → Angle unit** matches your equation. If **Continue: =** appears, tap **=** to keep searching, or **AC** to leave.
 
 </details>
+
+For help with angle units and other settings, visit [Sumi support](/support/).

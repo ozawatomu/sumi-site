@@ -1,7 +1,8 @@
 ---
-title: 'Fractions in Sumi'
-description: 'Sumi simplifies fractions automatically. Try a quick calculation, enter stacked fractions and switch between fraction and decimal answers.'
+title: 'How to calculate fractions in Sumi'
+description: 'Add and simplify fractions with Sumi’s free scientific calculator. Enter stacked fractions, switch to decimals and choose mixed-number answers.'
 publishedDate: 2026-09-10
+updatedDate: 2026-09-23
 order: 1
 ---
 
@@ -35,6 +36,8 @@ To enter **2 1/3**, tap **AC**, **2**, then **SHIFT**. Tap the mixed-fraction ke
 
 After a fraction result, tap **SHIFT**, then **a b/c** to switch between improper and mixed forms: **7/3** becomes **2 1/3**. Repeat to switch back.
 
-For mixed answers by default, choose **Settings → Fraction results → a b/c**.
+For mixed answers by default, choose **Settings → Calculation → Fraction results → Mixed numbers**.
 
 </details>
+
+For square roots and multiples of π, see [how to switch exact answers to decimals](/guides/exact-answers/). Find more help with settings on the [support page](/support/).

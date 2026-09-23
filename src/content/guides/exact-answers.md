@@ -1,7 +1,8 @@
 ---
-title: 'Exact answers and decimals'
-description: 'Sumi shows supported exact answers automatically. See how to switch between fractions, square roots or multiples of π and their decimal values.'
+title: 'How to switch exact answers to decimals'
+description: 'Use S⇔D in Sumi to switch supported fractions, square roots and multiples of π to decimals. Try √8 and learn why some answers stay approximate.'
 publishedDate: 2026-09-10
+updatedDate: 2026-09-23
 order: 2
 ---
 
@@ -24,3 +25,7 @@ Some calculations only return decimals, and some fractions are too large to disp
 The input matters too. Use **√2** rather than **2^0.5** for an exact square root, and **1 ÷ 3** rather than a rounded string of threes for one third. Sumi can’t recover the value you intended from a rounded input.
 
 </details>
+
+To set decimal places, open **Settings → Calculation → Number format → Fixed decimals**, then choose **Decimal places**. This changes decimal formatting; tap **S⇔D** if the completed answer is still exact.
+
+For stacked fractions and mixed numbers, follow the [fractions guide](/guides/fractions/).

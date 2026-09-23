@@ -17,6 +17,13 @@ interface Props {
 const { guide }: Props = Astro.props;
 const { Content } = await render(guide);
 const url = `${site.origin}/guides/${guide.id}/`;
+const revisionDate = guide.data.updatedDate ?? guide.data.publishedDate;
+const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
 const structuredData = [
   {
     '@context': 'https://schema.org',
@@ -24,6 +31,7 @@ const structuredData = [
     headline: guide.data.title,
     description: guide.data.description,
     datePublished: guide.data.publishedDate.toISOString(),
+    dateModified: revisionDate.toISOString(),
     author: { '@type': 'Person', name: 'Tomu Ozawa' },
     mainEntityOfPage: url,
     image: `${site.origin}/img/guides/${guide.id}.webp`,
@@ -56,6 +64,21 @@ const structuredData = [
         <span aria-hidden="true">←</span> The Sumi notebook
       </a>
       <h1>{guide.data.title}</h1>
+      <p class="article-meta">
+        By Tomu Ozawa · Published{' '}
+        <time datetime={guide.data.publishedDate.toISOString()}>
+          {dateFormatter.format(guide.data.publishedDate)}
+        </time>
+        {guide.data.updatedDate && (
+          <>
+            {' '}
+            · Updated{' '}
+            <time datetime={guide.data.updatedDate.toISOString()}>
+              {dateFormatter.format(guide.data.updatedDate)}
+            </time>
+          </>
+        )}
+      </p>
       <div class="article-download">
         <DownloadButton
           campaign={`guide_${guide.id.replaceAll('-', '_')}`}
@@ -78,3 +101,11 @@ const structuredData = [
     <GuideCards exclude={guide.id} />
   </section>
 </SiteLayout>
+
+<style>
+  .article-meta {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+</style>

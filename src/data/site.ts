@@ -3,7 +3,7 @@ export const site = {
   origin: 'https://sumicalculator.com',
   email: 'hello@sumicalculator.com',
   description:
-    'A free scientific calculator for Android with textbook-style maths, exact fractions and surds, and a quiet ink-and-paper design. Offline. No ads. No tracking.',
+    'Your scientific calculator, always with you. Free for Android, with familiar controls, editable textbook maths and exact forms where supported. Offline. No ads.',
   android: {
     available: true,
     url: 'https://play.google.com/store/apps/details?id=com.tomuozawa.sumi',
